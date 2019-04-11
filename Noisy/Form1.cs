@@ -25,6 +25,11 @@ namespace Noisy
             timerAnime.Stop();
         }
 
+        private void initComboType()
+        {
+            // TODO: comboboxで表示するものの週別を選べるようにする,ここで一覧データ作成
+        }
+
         // ホワイトノイズの出力
         public Bitmap CreateWhiteNoise(int size = SIZE)
         {
@@ -45,6 +50,28 @@ namespace Noisy
                 //UpdateTextLog(msg);
             }
             return bmp;
+        }
+
+        public Bitmap CreateValueNoise(int size = SIZE)
+        {
+            double[,] noise = new double[size, size];
+            /*
+                   v01         v11
+                   .-----------.
+               y  /           /
+                 /           /
+                /           /
+               .-----------.
+             v00     x     v01
+             */
+            // 四隅の頂点をランダム値で決定
+            float v00 = GetFRand();
+            float v01 = GetFRand();
+            float v10 = GetFRand();
+            float v11 = GetFRand();
+
+
+            return null;
         }
 
         // ランダム値の生成
