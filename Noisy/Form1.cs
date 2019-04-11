@@ -39,7 +39,7 @@ namespace Noisy
                     msg += value.ToString() + " ";
 
                     int v = (int)(value * 100.0);
-                    Color color = Color.FromArgb(255, v, v, v + 100);
+                    Color color = Color.FromArgb(255, v, v, v);
                     bmp.SetPixel(x, y, color);
                 }
                 //UpdateTextLog(msg);
