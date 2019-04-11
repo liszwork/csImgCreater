@@ -32,7 +32,7 @@
             this.pic = new System.Windows.Forms.PictureBox();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.textLog = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerAnime = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,10 +63,10 @@
             this.textLog.Size = new System.Drawing.Size(366, 129);
             this.textLog.TabIndex = 2;
             // 
-            // timer1
+            // timerAnime
             // 
-            this.timer1.Interval = 50;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerAnime.Interval = 50;
+            this.timerAnime.Tick += new System.EventHandler(this.timerAnime_Tick);
             // 
             // Form1
             // 
@@ -89,7 +89,7 @@
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.TextBox textLog;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerAnime;
     }
 }
 

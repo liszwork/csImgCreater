@@ -12,25 +12,28 @@ namespace Noisy
 {
     public partial class Form1 : Form
     {
-        public readonly int SIZE = 256;
-        public readonly int SEED = 1000;
-        Random rand = new Random(1000);
+
+        public const int SIZE = 256;
+        public const int SEED = 1000;
+        Random rand = new Random(SEED);
         private int count = 0;
 
         public Form1()
         {
             InitializeComponent();
             this.pic.Image = CreateWhiteNoise();
-            timer1.Stop();
+            timerAnime.Stop();
         }
-        public Bitmap CreateWhiteNoise()
+
+        // ホワイトノイズの出力
+        public Bitmap CreateWhiteNoise(int size = SIZE)
         {
-            double[,] noise = new double[SIZE, SIZE];
-            Bitmap bmp = new Bitmap(SIZE, SIZE);
-            for ( int y = 0; y < SIZE; y++ )
+            double[,] noise = new double[size, size];
+            Bitmap bmp = new Bitmap(size, size);
+            for ( int y = 0; y < size; y++ )
             {
                 string msg = "@";
-                for ( int x = 0; x < SIZE; x++ )
+                for ( int x = 0; x < size; x++ )
                 {
                     float value = GetFRand();
                     msg += value.ToString() + " ";
@@ -44,11 +47,13 @@ namespace Noisy
             return bmp;
         }
 
+        // ランダム値の生成
         private float GetFRand()
         {
             return (float)this.rand.NextDouble();
         }
 
+        // ログテキストエリアへの出力
         private void UpdateTextLog(string log, bool isClear = false)
         {
             if ( isClear )
@@ -58,16 +63,18 @@ namespace Noisy
             this.textLog.Text = log + "\r\n" + this.textLog.Text;
         }
 
+        // 更新ボタンクリック
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             string frand = GetFRand().ToString();
             UpdateTextLog(string.Format("{0:f5}", frand));
 
             this.pic.Image = CreateWhiteNoise();
-            timer1.Start();
+            timerAnime.Start();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        // アニメーション用タイマー
+        private void timerAnime_Tick(object sender, EventArgs e)
         {
             if ( count < 1000 )
             {
@@ -76,7 +83,7 @@ namespace Noisy
             }
             else
             {
-                timer1.Stop();
+                timerAnime.Stop();
                 count = 0;
             }
             UpdateTextLog(count.ToString(), true);
