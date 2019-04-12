@@ -31,14 +31,14 @@ namespace Noisy
         }
 
         // ホワイトノイズの出力
-        public Bitmap CreateWhiteNoise(int size = SIZE)
+        public Bitmap CreateWhiteNoise(int w = SIZE, int h = SIZE)
         {
-            double[,] noise = new double[size, size];
-            Bitmap bmp = new Bitmap(size, size);
-            for ( int y = 0; y < size; y++ )
+            double[,] noise = new double[w, h];
+            Bitmap bmp = new Bitmap(w, h);
+            for ( int y = 0; y < h; y++ )
             {
                 string msg = "@";
-                for ( int x = 0; x < size; x++ )
+                for ( int x = 0; x < w; x++ )
                 {
                     float value = GetFRand();
                     msg += value.ToString() + " ";
@@ -114,6 +114,15 @@ namespace Noisy
                 count = 0;
             }
             UpdateTextLog(count.ToString(), true);
+        }
+
+        // 保存
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            int w = int.Parse(textWeight.Text);
+            int h = int.Parse(textHeight.Text);
+            this.pic.Image = CreateWhiteNoise(w, h);
+            this.pic.Image.Save(@".\output\test.png", System.Drawing.Imaging.ImageFormat.Png);
         }
     }
 }
