@@ -16,7 +16,11 @@ namespace Noisy
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+#if TEST
+            Application.Run(new TestForm());
+#else
             Application.Run(new Form1());
+#endif
         }
     }
 }
