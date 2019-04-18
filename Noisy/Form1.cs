@@ -18,17 +18,49 @@ namespace Noisy
         Random rand = new Random(SEED);
         private int count = 0;
 
+        public const string WhiteNoise = "White Noise";
+        public const string ValueNoise = "Value Noise";
+        public readonly string[] itemList =
+        {
+            WhiteNoise,
+            ValueNoise
+        };
+
         public Form1()
         {
             InitializeComponent();
+            InitComboType();
+
             //this.pic.Image = CreateWhiteNoise();
             this.pic.Image = CreateValueNoise();
             timerAnime.Stop();
         }
 
-        private void initComboType()
+        // 関数呼び出し
+        private Bitmap Call(string target, int w = SIZE, int h = SIZE)
         {
-            // TODO: comboboxで表示するものの週別を選べるようにする,ここで一覧データ作成
+            Bitmap img = null;
+            switch ( target )
+            {
+            case WhiteNoise:
+                img = CreateWhiteNoise(w, h);
+                break;
+            case ValueNoise:
+                img = CreateValueNoise(w, h);
+                break;
+            default:
+                break;
+            }
+            return img;
+        }
+
+        // コンボボックスの初期化
+        private void InitComboType()
+        {
+            foreach ( string item in itemList )
+            {
+                this.comboType.Items.Add(item);
+            }
         }
 
         // ホワイトノイズの出力
@@ -108,7 +140,8 @@ namespace Noisy
         // tの値によってfromからtoまでの中間値を取得
         public float Lerp(float from, float to, float t)
         {
-            return from + ((from * t) - (to * t));
+            //return from + ((from * t) - (to * t));
+            return from * (1 - t) + to * t;
         }
 
         public Bitmap CreateValueNoise(int w = SIZE, int h = SIZE)
@@ -138,13 +171,13 @@ namespace Noisy
                 for ( int x = 0; x < w; x++ )
                 {
                     float tx = (float)x / (float)w;
-                    int v = (int)(Lerp(v1011, v0001, tx) * 100) ;
+                    int v = (int)(Lerp(v1011, v0001, tx) * 100);
                     Color color = Color.FromArgb(255, v, v, v);
                     bmp.SetPixel(x, y, color);
                 }
             }
 
-            return null;
+            return bmp;
         }
 
         // ランダム値の生成
@@ -166,10 +199,10 @@ namespace Noisy
         // 更新ボタンクリック
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            string frand = GetFRand().ToString();
-            UpdateTextLog(string.Format("{0:f5}", frand));
+            //string frand = GetFRand().ToString();
+            //UpdateTextLog(string.Format("{0:f5}", frand));
 
-            this.pic.Image = CreateWhiteNoise();
+            this.pic.Image = Call(this.comboType.SelectedText);
             timerAnime.Start();
         }
 
@@ -178,7 +211,7 @@ namespace Noisy
         {
             if ( count < 1000 )
             {
-                this.pic.Image = CreateWhiteNoise();
+                this.pic.Image = Call(this.comboType.SelectedText);
                 count++;
             }
             else
@@ -194,7 +227,7 @@ namespace Noisy
         {
             int w = int.Parse(textWeight.Text);
             int h = int.Parse(textHeight.Text);
-            this.pic.Image = CreateWhiteNoise(w, h);
+            this.pic.Image = Call(this.comboType.SelectedText);
             this.pic.Image.Save(@".\output\test.png", System.Drawing.Imaging.ImageFormat.Png);
         }
     }
